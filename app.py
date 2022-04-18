@@ -1,7 +1,10 @@
-import random
+
 import os
+from flask import Flask, render_template, request
+import random
 import requests
-from flask import Flask, render_template, abort, request
+from QuoteEngine import Ingestor
+from MemeEngine import MemeEngine
 
 # @TODO Import your Ingestor and MemeEngine classes
 
@@ -20,13 +23,20 @@ def setup():
 
     # TODO: Use the Ingestor class to parse all files in the
     # quote_files variable
-    quotes = None
+    quotes = []
+
+    for file in quote_files:
+        if Ingestor.parse(file) is not None:
+            quotes.append(Ingestor.parse(file))
 
     images_path = "./_data/photos/dog/"
 
     # TODO: Use the pythons standard library os class to find all
     # images within the images images_path directory
-    imgs = None
+    imgs = []
+
+    for root, _, files in os.walk(images_path):
+        imgs = [os.path.join(root, name) for name in files]
 
     return quotes, imgs
 
@@ -43,10 +53,15 @@ def meme_rand():
     # 1. select a random image from imgs array
     # 2. select a random quote from the quotes array
 
-    img = None
-    quote = None
-    path = meme.make_meme(img, quote.body, quote.author)
-    return render_template('meme.html', path=path)
+    img = random.choice(imgs)
+    quotes_array = random.choice(quotes)
+    quote = random.choice(quotes_array)
+    if img and quote:
+        path = meme.make_meme(img, quote.body, quote.author)
+        return render_template('meme.html', path=path)
+    else:
+        path = meme.make_meme('./_data/photos/dog/xander_1.jpg', "default quote", "Nicki Cash")
+        return render_template('meme.html', path=path)
 
 
 @app.route('/create', methods=['GET'])
@@ -66,9 +81,23 @@ def meme_post():
     #    file and the body and author form paramaters.
     # 3. Remove the temporary saved image.
 
+    image_url = request.form['image_url']
+    body = request.form['body']
+    author = request.form['author']
     path = None
 
-    return render_template('meme.html', path=path)
+    try:
+        img = requests.get(image_url)
+        img_file = f'tmp/{random.randint(0, 100000000)}.jpg'
+        open(img_file, 'wb').write(img.content)
+    except:
+        print("Error: Image could not be loaded")
+        path = meme.make_meme('./_data/photos/dog/xander_1.jpg', "default quote", "Nicki Cash")
+    else:
+        path = meme.make_meme(img_file, body, author)
+        os.remove(img_file)
+    finally:
+        return render_template('meme.html', path=path)
 
 
 if __name__ == "__main__":
