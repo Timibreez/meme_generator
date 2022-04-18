@@ -84,10 +84,10 @@ def meme_post():
     image_url = request.form['image_url']
     body = request.form['body']
     author = request.form['author']
-    img = requests.get(image_url)
     path = None
 
     try:
+        img = requests.get(image_url)
         img_file = f'tmp/{random.randint(0, 100000000)}.jpg'
         open(img_file, 'wb').write(img.content)
     except:
