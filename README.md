@@ -26,3 +26,5 @@ Meme Generator an Udacity Intermediate Python Project. Build a python applicatio
   --author: string quote author
   --path: path to image file
   eg: python meme.py --path [PATH to image] --body[BODY] --author[AUTHOR]
+
+## Happy Hacking
