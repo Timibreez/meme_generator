@@ -6,14 +6,14 @@ from .quote_model import QuoteModel
 import pandas as pd
 
 
-class CSVIngestor(IngestorInterface):
+class CsvIngestor(IngestorInterface):
     """Parse csv files and create new quote objects."""
 
-    file_type = ['csv']
+    file_types = ['csv']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Parse the csv file at the path returning new QuoteModel objects."""
+        """Attempt ingesting the file at path return new QuoteModel objects."""
         if not cls.can_ingest(path):
             raise Exception("ingestion failed")
 
