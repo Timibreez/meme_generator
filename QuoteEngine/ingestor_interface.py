@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 """Importing typing for runtime support for type hints"""
 from typing import List
 
-from quote_model import QuoteModel
+from .quote_model import QuoteModel
 
 
 class IngestorInterface(ABC):
@@ -13,10 +13,9 @@ class IngestorInterface(ABC):
     def can_ingest(cls, path: str) -> bool:
         """Check if the file can be ingested"""
         ingest = path.split('.')[-1]
-        ingested = ingest in cls.file_types
-        return ingested
+        return ingest in cls.file_types
 
-    @abstractmethod
     @classmethod
+    @abstractmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         pass

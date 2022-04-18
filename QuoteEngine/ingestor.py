@@ -1,15 +1,15 @@
 
-from ingestor_interface import IngestorInterface
+from .ingestor_interface import IngestorInterface
+from .quote_model import QuoteModel
+from .csv_ingestor import CsvIngestor
+from .docx_ingestor import DocxIngestor
+from .pdf_ingestor import PdfIngestor
+from .txt_ingestor import TxtIngestor
 from typing import List
-from quote_model import QuoteModel
-from csv_ingestor import CSVIngestors
-from docx_ingestor import DOCXIngestors
-from pdf_ingestor import PDFIngestors
-from txt_ingestor import TXTIngestors
 
 
 class Ingestor(IngestorInterface):
-    ingestors = [CSVIngestors, DOCXIngestors, PDFIngestors, TXTIngestors]
+    ingestors = [CsvIngestor, DocxIngestor, PdfIngestor, TxtIngestor]
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:

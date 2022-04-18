@@ -18,7 +18,7 @@ class CsvIngestor(IngestorInterface):
             raise Exception("ingestion failed")
 
         quote_list = []
-        data = pd.read_csv(path, header=0, sep=',', error_bad_lines=False)
+        data = pd.read_csv(path, header=0, sep=',', on_bad_lines='skip')
         for _, row in data.iterrows():
             quote = QuoteModel(row['body'], row['author'])
             quote_list.append(quote)

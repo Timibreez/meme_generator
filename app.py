@@ -1,6 +1,6 @@
-
+"""Main app file"""
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, abort, request
 import random
 import requests
 from QuoteEngine import Ingestor
@@ -54,9 +54,9 @@ def meme_rand():
     # 2. select a random quote from the quotes array
 
     img = random.choice(imgs)
-    quotes_array = random.choice(quotes)
-    quote = random.choice(quotes_array)
-    if img and quote:
+    quotes_list = random.choice(quotes)
+    quote = random.choice(quotes_list)
+    if quote and img:
         path = meme.make_meme(img, quote.body, quote.author)
         return render_template('meme.html', path=path)
     else:
@@ -84,10 +84,10 @@ def meme_post():
     image_url = request.form['image_url']
     body = request.form['body']
     author = request.form['author']
+    img = requests.get(image_url)
     path = None
 
     try:
-        img = requests.get(image_url)
         img_file = f'tmp/{random.randint(0, 100000000)}.jpg'
         open(img_file, 'wb').write(img.content)
     except:

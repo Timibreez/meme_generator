@@ -16,15 +16,16 @@ class TxtIngestor(IngestorInterface):
         if not cls.can_ingest(path):
             raise Exception('Ingestion failed')
 
+        file = open(path, 'r')
         quote_list = []
 
-        with open(path, 'r') as file:
-            for line in file.readlines():
-                line = line.strip('\n\r').strip()
-                line_length = len(line)
-                if line_length > 0:
-                    parsed_line = line.split(' - ')
-                    quote_model = QuoteModel(parsed_line[0], parsed_line[1])
-                    quote_list.append(quote_model)
+        for line in file.readlines():
+            line = line.strip('\n\r').strip()
+            line_length = len(line)
+            if line_length > 0:
+                parsed_line = line.split(' - ')
+                quote_model = QuoteModel(parsed_line[0], parsed_line[1])
+                quote_list.append(quote_model)
+        file.close()
 
         return quote_list
