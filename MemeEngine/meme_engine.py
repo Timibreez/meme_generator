@@ -33,7 +33,7 @@ class MemeEngine():
             if width is not None:
                 ratio = width/float(img.size[0])
                 height = int(ratio*float(img.size[1]))
-                img = img.resize((width, height), Image.NEAREST)
+                img = img.resize((width, height), Image.Dither.NONE)
 
             if text and author:
                 message = f'{text}\n- {author}'
@@ -46,5 +46,5 @@ class MemeEngine():
             file_path = f'{self.output_path}/{random.randint(0, 1000000)}.jpeg'
 
             img.save(file_path)
-            print(f"Meme saved: {self.output_path}")
+            print(f'Meme saved {self.output_path}')
             return file_path

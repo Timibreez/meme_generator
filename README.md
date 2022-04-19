@@ -13,9 +13,9 @@ Meme Generator an Udacity Intermediate Python Project. Build a python applicatio
 ### Flask Web Interface
 
 - Clone the repo <code>git clone https://github.com/Timibreez/meme_generator.git</code>
-- Create a virtual environment with <code>python venv 'nameofvirtualenvironment'</code>
-- install the dependencies in the requirements.txt file with <code>pipenv install -r requirements.txt</code>
-- Activate your virtual environment with <code>pipenv venv/Scripts/activate</code>
+- Create a virtual environment with <code>python -m venv 'nameofvirtualenvironment'</code>
+- Activate your virtual environment with <code>source venv/Scripts/activate</code>
+- install the dependencies in the requirements.txt file with <code>pip install -r requirements.txt</code>
 - Run `python app.py` or `flask run` on the terminal.
 - Follow the link generated.
 
