@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # author - quote author to add to the image
     
     parser = argparse.ArgumentParser(description='A Free Meme Generator.')
-    parser.add_argument('--path', type=str,
+    parser.add_argument('path', type=str,
                         default=None, help='image file file_path')
     parser.add_argument('--body', type=str,
                         default=None, help='The body Quote')
